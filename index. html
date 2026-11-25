@@ -1,206 +1,944 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMK Banjar Asri Cimaung - Unggul & Berkarakter</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Teknik Komputer dan Jaringan - SMK Banjar Asri Cimaung</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        navy: {
+                            950: '#050b14',
+                            900: '#0a1224',
+                            800: '#111e38',
+                            700: '#1a2d52',
+                        },
+                        tech: {
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="bg-slate-50 font-sans text-slate-800 scroll-smooth">
+<body class="bg-navy-950 text-slate-200 font-sans antialiased selection:bg-tech-500 selection:text-white overflow-x-hidden">
 
-    <!-- NAVBAR -->
-    <nav class="bg-emerald-800 text-white sticky top-0 z-50 shadow-md">
+    <!-- ==================== 1. NAVBAR RESPONSIF ==================== -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-navy-950/80 backdrop-blur-md border-b border-slate-800/60">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center">
-                <div class="flex items-center space-x-3">
-                    <div class="bg-white p-2 rounded-full text-emerald-800 font-bold text-xl">
-                        <i class="fa-solid fa-school"></i>
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo & Brand -->
+                <a href="#beranda" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-tech-400 to-blue-600 flex items-center justify-center shadow-lg shadow-tech-500/25 group-hover:scale-105 transition-transform">
+                        <i data-lucide="network" class="w-6 h-6 text-white"></i>
                     </div>
                     <div>
-                        <span class="text-xl font-extrabold tracking-wider block">SMK BANJAR ASRI</span>
-                        <span class="text-xs text-emerald-200 block">Cimaung - Kab. Bandung</span>
+                        <span class="block text-lg font-extrabold tracking-tight text-white leading-none">TKJ <span class="text-tech-400">BANJAR ASRI</span></span>
+                        <span class="block text-xs font-mono text-slate-400 mt-1">SMK Banjar Asri Cimaung</span>
                     </div>
-                </div>
-                <div class="hidden md:flex space-x-8 font-medium">
-                    <a href="#beranda" class="hover:text-emerald-300 transition">Beranda</a>
-                    <a href="#tentang" class="hover:text-emerald-300 transition">Tentang Kami</a>
-                    <a href="#jurusan" class="hover:text-emerald-300 transition">Jurusan</a>
-                    <a href="#fasilitas" class="hover:text-emerald-300 transition">Fasilitas</a>
-                    <a href="#kontak" class="hover:text-emerald-300 transition">Kontak</a>
-                </div>
-                <div class="md:hidden flex items-center">
-                    <button id="menu-btn" class="text-white focus:outline-none">
-                        <i class="fa-solid fa-bars text-2xl"></i>
-                    </button>
-                </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="#beranda" class="text-sm font-medium text-slate-300 hover:text-tech-400 transition-colors">Beranda</a>
+                    <a href="#tentang" class="text-sm font-medium text-slate-300 hover:text-tech-400 transition-colors">Tentang TKJ</a>
+                    <a href="#materi" class="text-sm font-medium text-slate-300 hover:text-tech-400 transition-colors">Materi Pembelajaran</a>
+                    <a href="#prospek" class="text-sm font-medium text-slate-300 hover:text-tech-400 transition-colors">Prospek Kerja</a>
+                    <a href="#kontak" class="px-5 py-2.5 rounded-xl bg-tech-500 hover:bg-tech-400 text-navy-950 font-semibold text-sm transition-all shadow-lg shadow-tech-500/20 hover:shadow-tech-400/40">
+                        Hubungi Kami
+                    </a>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" aria-label="Buka Menu" class="md:hidden p-2.5 rounded-xl bg-navy-800 text-slate-200 hover:text-tech-400 border border-slate-700/70">
+                    <i data-lucide="menu" id="menu-icon" class="w-6 h-6"></i>
+                </button>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-emerald-900 px-4 pt-2 pb-4 space-y-2">
-            <a href="#beranda" class="block py-2 hover:bg-emerald-800 px-2 rounded">Beranda</a>
-            <a href="#tentang" class="block py-2 hover:bg-emerald-800 px-2 rounded">Tentang Kami</a>
-            <a href="#jurusan" class="block py-2 hover:bg-emerald-800 px-2 rounded">Jurusan</a>
-            <a href="#fasilitas" class="block py-2 hover:bg-emerald-800 px-2 rounded">Fasilitas</a>
-            <a href="#kontak" class="block py-2 hover:bg-emerald-800 px-2 rounded">Kontak</a>
-        </div>
-    </nav>
 
-    <!-- HERO SECTION -->
-    <section id="beranda" class="bg-gradient-to-r from-emerald-900 to-teal-800 text-white py-24 px-4 text-center relative overflow-hidden">
-        <div class="max-w-4xl mx-auto relative z-10">
-            <span class="bg-emerald-700 text-emerald-100 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-widest inline-block mb-4">Terakreditasi A</span>
-            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">Mewujudkan Generasi Unggul, Kompeten & Berakhlak Mulia</h1>
-            <p class="text-lg md:text-xl text-emerald-100 mb-8 max-w-2xl mx-auto">Sekolah Menengah Kejuruan pilihan di Cimaung Kabupaten Bandung dengan motto <span class="font-bold text-yellow-300">BAROKAH</span> (Bahagia, Religius, Optimis, Kreatif, Aktif, dan Handal).</p>
-            <div class="flex justify-center space-x-4">
-                <a href="#jurusan" class="bg-yellow-500 hover:bg-yellow-400 text-slate-900 font-bold px-8 py-3 rounded-lg shadow-lg transition">Lihat Jurusan</a>
-                <a href="#kontak" class="border border-white hover:bg-white hover:text-emerald-900 font-bold px-8 py-3 rounded-lg transition">Hubungi Kami</a>
+        <!-- Mobile Dropdown Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden bg-navy-900 border-b border-slate-800 px-4 pt-3 pb-6 space-y-2">
+            <a href="#beranda" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-slate-200 hover:bg-navy-800 hover:text-tech-400">Beranda</a>
+            <a href="#tentang" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-slate-200 hover:bg-navy-800 hover:text-tech-400">Tentang TKJ</a>
+            <a href="#materi" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-slate-200 hover:bg-navy-800 hover:text-tech-400">Materi Pembelajaran</a>
+            <a href="#prospek" class="mobile-link block px-4 py-3 rounded-xl text-base font-medium text-slate-200 hover:bg-navy-800 hover:text-tech-400">Prospek Kerja</a>
+            <a href="#kontak" class="mobile-link block px-4 py-3 rounded-xl text-base font-semibold bg-tech-500 text-navy-950 text-center mt-3">Kontak & Lokasi</a>
+        </div>
+    </header>
+
+    <!-- ==================== 2. HERO SECTION ==================== -->
+    <section id="beranda" class="relative pt-32 pb-20 lg:pt-44 lg:pb-32 overflow-hidden">
+        <!-- Decorative Background Grid & Glow -->
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-25 pointer-events-none"></div>
+        <div class="absolute top-20 left-1/2 -translate-x-1/2 w-[36rem] h-[20rem] bg-tech-500/20 blur-[120px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                <!-- Left Column: Copy & CTA -->
+                <div class="lg:col-span-7 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-navy-800/90 border border-tech-500/30 text-tech-400 text-xs sm:text-sm font-mono mb-6">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span>Kompetensi Keahlian Unggulan • Cimaung, Kab. Bandung</span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.15] mb-6">
+                        Teknik Komputer dan Jaringan - <span class="text-transparent bg-clip-text bg-gradient-to-r from-tech-400 via-blue-400 to-indigo-400">SMK Banjar Asri</span>
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto lg:mx-0 mb-8">
+                        Mencetak generasi teknisi jaringan, administrator server, dan spesialis infrastruktur IT yang kompeten, bersertifikasi industri (MikroTik & Cisco), serta siap bersaing di era transformasi digital.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <a href="#materi" class="w-full sm:w-auto px-7 py-4 rounded-2xl bg-gradient-to-r from-tech-500 to-blue-600 hover:from-tech-400 hover:to-blue-500 text-white font-bold text-base shadow-xl shadow-tech-500/25 flex items-center justify-center gap-2.5 transition-all hover:-translate-y-0.5">
+                            <i data-lucide="book-open-check" class="w-5 h-5"></i>
+                            <span>Jelajahi Kurikulum & Materi</span>
+                        </a>
+                        <a href="#tentang" class="w-full sm:w-auto px-7 py-4 rounded-2xl bg-navy-800/80 hover:bg-navy-700 text-slate-200 font-semibold text-base border border-slate-700 flex items-center justify-center gap-2 transition-all">
+                            <i data-lucide="server" class="w-5 h-5 text-tech-400"></i>
+                            <span>Fasilitas Lab TKJ</span>
+                        </a>
+                    </div>
+
+                    <!-- Key Highlights -->
+                    <div class="grid grid-cols-3 gap-4 mt-12 pt-8 border-t border-slate-800/80 max-w-lg mx-auto lg:mx-0">
+                        <div>
+                            <p class="text-2xl sm:text-3xl font-extrabold text-white font-mono">100%</p>
+                            <p class="text-xs sm:text-sm text-slate-400 mt-1">Praktik Lab Nyata</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl sm:text-3xl font-extrabold text-tech-400 font-mono">MTCNA</p>
+                            <p class="text-xs sm:text-sm text-slate-400 mt-1">Standar Kurikulum</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl sm:text-3xl font-extrabold text-white font-mono">FTTH</p>
+                            <p class="text-xs sm:text-sm text-slate-400 mt-1">Fiber Optik Ready</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Interactive Network Terminal Card -->
+                <div class="lg:col-span-5">
+                    <div class="relative rounded-3xl bg-navy-900/90 border border-slate-700/80 p-5 sm:p-6 shadow-2xl animate-float">
+                        <!-- Window Controls -->
+                        <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                                <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+                                <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                            </div>
+                            <span class="text-xs font-mono text-slate-400">admin@router-smkbanjarasri:~</span>
+                        </div>
+
+                        <!-- Simulated RouterOS / Linux Output -->
+                        <div class="font-mono text-xs sm:text-sm space-y-2.5 text-slate-300">
+                            <p class="text-emerald-400">$ /system identity print</p>
+                            <p class="text-slate-400 pl-3">name: <span class="text-white font-semibold">"CORE-ROUTER-TKJ-BANJARASRI"</span></p>
+                            
+                            <p class="text-emerald-400 pt-1">$ /interface ethernet monitor</p>
+                            <div class="bg-navy-950 rounded-xl p-3 border border-slate-800/90 space-y-1.5 text-xs">
+                                <div class="flex justify-between">
+                                    <span class="text-tech-400">ether1-WAN-ISP</span>
+                                    <span class="text-emerald-400">1Gbps • LINK UP</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-tech-400">sfp1-FIBER-LAB</span>
+                                    <span class="text-emerald-400">10Gbps • ACTIVE</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-tech-400">ether2-SERVER-PROXMOX</span>
+                                    <span class="text-emerald-400">1Gbps • LINK UP</span>
+                                </div>
+                            </div>
+
+                            <p class="text-emerald-400 pt-1">$ ./cek_kompetensi_siswa.sh</p>
+                            <div class="flex flex-wrap gap-2 pt-1">
+                                <span class="px-2.5 py-1 rounded-lg bg-tech-500/15 text-tech-400 border border-tech-500/30 text-xs">MikroTik Routing</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-blue-500/15 text-blue-400 border border-blue-500/30 text-xs">Linux Debian Server</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 text-xs">Cisco VLAN</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 text-xs">Fiber Splicing</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- TENTANG KAMI -->
-    <section id="tentang" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-slate-900 mb-2">Tentang SMK Banjar Asri</h2>
-            <div class="w-20 h-1 bg-emerald-600 mx-auto"></div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div>
-                <h3 class="text-2xl font-semibold text-emerald-800 mb-4">Membangun Karakter & Kompetensi Vokasi</h3>
-                <p class="text-slate-600 mb-4 leading-relaxed">
-                    SMK Banjar Asri Cimaung merupakan lembaga pendidikan kejuruan di bawah naungan Yayasan Tri Karya Pembangunan. Berkomitmen untuk mencetak lulusan siap kerja, cerdas, terampil, serta memiliki nilai-nilai religius yang kuat.
+    <!-- ==================== 3. TENTANG JURUSAN TKJ ==================== -->
+    <section id="tentang" class="py-20 bg-navy-900/50 border-y border-slate-800/70">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-tech-400 font-mono text-sm font-semibold uppercase tracking-wider">Profil Kompetensi</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2 mb-4">Mengapa Memilih Jurusan TKJ SMK Banjar Asri?</h2>
+                <p class="text-slate-400 text-base sm:text-lg">
+                    Berlokasi strategis di Cimaung, Kabupaten Bandung, program keahlian TKJ kami memadukan kurikulum merdeka berbasis industri dengan fasilitas praktikum perangkat keras jaringan modern.
                 </p>
-                <div class="bg-emerald-50 border-l-4 border-emerald-600 p-4 rounded-r-lg">
-                    <p class="italic text-emerald-900 font-medium">"Visi kami adalah mewujudkan sekolah vokasi yang handal dengan budaya BAROKAH (Bahagia, Religius, Optimis, Kreatif, Aktif, dan Handal)."</p>
-                </div>
             </div>
-            <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-100">
-                <h4 class="text-xl font-bold text-slate-800 mb-6 border-b pb-3">Keunggulan Sekolah</h4>
-                <ul class="space-y-4">
-                    <li class="flex items-start space-x-3">
-                        <i class="fa-solid fa-circle-check text-emerald-600 text-xl mt-1"></i>
-                        <span><strong>Akreditasi A:</strong> Standar mutu pendidikan teruji nasional.</span>
-                    </li>
-                    <li class="flex items-start space-x-3">
-                        <i class="fa-solid fa-circle-check text-emerald-600 text-xl mt-1"></i>
-                        <span><strong>Fasilitas Lengkap:</strong> Lab Komputer, Bengkel Otomotif, dan Lab Elektronika.</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
 
-    <!-- JURUSAN -->
-    <section id="jurusan" class="py-20 bg-slate-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-slate-900 mb-2">Program Keahlian (Jurusan)</h2>
-                <div class="w-20 h-1 bg-emerald-600 mx-auto"></div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition">
-                    <div class="bg-emerald-800 p-6 text-white text-center">
-                        <i class="fa-solid fa-network-wired text-4xl mb-2"></i>
-                        <h3 class="text-xl font-bold">TJKT</h3>
+            <!-- Visi Misi & Keunggulan Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                <!-- Card 1: Visi Misi -->
+                <div class="rounded-3xl bg-navy-800/60 border border-slate-700/70 p-7 hover:border-tech-500/50 transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-tech-500/15 border border-tech-500/30 flex items-center justify-center text-tech-400 mb-6">
+                        <i data-lucide="target" class="w-6 h-6"></i>
                     </div>
-                    <div class="p-6">
-                        <h4 class="font-semibold text-slate-800 mb-2">Teknik Jaringan Komputer & Telekomunikasi</h4>
-                        <p class="text-slate-600 text-sm">Perakitan komputer, instalasi jaringan LAN/WAN, administrasi server, dan fiber optic.</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition">
-                    <div class="bg-teal-800 p-6 text-white text-center">
-                        <i class="fa-solid fa-car-side text-4xl mb-2"></i>
-                        <h3 class="text-xl font-bold">Teknik Otomotif</h3>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="font-semibold text-slate-800 mb-2">Teknik Kendaraan Ringan</h4>
-                        <p class="text-slate-600 text-sm">Perawatan dan perbaikan mesin kendaraan, sistem kelistrikan, serta teknologi otomotif.</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition">
-                    <div class="bg-cyan-800 p-6 text-white text-center">
-                        <i class="fa-solid fa-microchip text-4xl mb-2"></i>
-                        <h3 class="text-xl font-bold">Teknik Elektronika</h3>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="font-semibold text-slate-800 mb-2">Teknik Audio Video / Elektronika</h4>
-                        <p class="text-slate-600 text-sm">Sistem elektronika industri, perangkat audio video, dan perancangan mikrokontroler.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FASILITAS -->
-    <section id="fasilitas" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-slate-900 mb-2">Fasilitas Sekolah</h2>
-            <div class="w-20 h-1 bg-emerald-600 mx-auto"></div>
-        </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div class="bg-white p-6 rounded-xl shadow border border-slate-100">
-                <i class="fa-solid fa-wifi text-emerald-600 text-3xl mb-3"></i>
-                <h4 class="font-bold text-slate-800">WiFi Area</h4>
-            </div>
-            <div class="bg-white p-6 rounded-xl shadow border border-slate-100">
-                <i class="fa-solid fa-mosque text-emerald-600 text-3xl mb-3"></i>
-                <h4 class="font-bold text-slate-800">Masjid 2 Lantai</h4>
-            </div>
-            <div class="bg-white p-6 rounded-xl shadow border border-slate-100">
-                <i class="fa-solid fa-laptop-code text-emerald-600 text-3xl mb-3"></i>
-                <h4 class="font-bold text-slate-800">Lab Komputer</h4>
-            </div>
-            <div class="bg-white p-6 rounded-xl shadow border border-slate-100">
-                <i class="fa-solid fa-screwdriver-wrench text-emerald-600 text-3xl mb-3"></i>
-                <h4 class="font-bold text-slate-800">Bengkel Otomotif</h4>
-            </div>
-        </div>
-    </section>
-
-    <!-- KONTAK -->
-    <section id="kontak" class="py-20 bg-slate-900 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold mb-2">Hubungi Kami</h2>
-                <div class="w-20 h-1 bg-emerald-500 mx-auto"></div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <div>
-                    <h3 class="text-xl font-semibold mb-4 text-emerald-400">Alamat Sekolah</h3>
-                    <p class="text-slate-300 mb-6">Jl. Raya Gunung Puntang KM. 1, Kec. Cimaung, Kab. Bandung, Jawa Barat 40374</p>
-                    <ul class="space-y-3 text-slate-300">
-                        <li><i class="fa-solid fa-phone text-emerald-400 mr-2"></i> (022) 88882357</li>
-                        <li><i class="fa-solid fa-envelope text-emerald-400 mr-2"></i> info@banjarasri.com</li>
+                    <h3 class="text-xl font-bold text-white mb-3">Visi & Misi Jurusan</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                        Menjadi pusat pendidikan vokasi bidang infrastruktur jaringan dan komputasi awan yang unggul, berakhlak mulia, dan adaptif terhadap perkembangan teknologi global.
+                    </p>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-tech-400 shrink-0 mt-0.5"></i>
+                            <span>Pembelajaran berbasis proyek (Project-Based Learning).</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-tech-400 shrink-0 mt-0.5"></i>
+                            <span>Penguatan karakter disiplin & etos kerja industri IT.</span>
+                        </li>
                     </ul>
                 </div>
-                <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700">
-                    <h3 class="text-xl font-semibold mb-4 text-emerald-400">Kirim Pesan</h3>
-                    <form onsubmit="alert('Pesan berhasil dikirim!'); return false;" class="space-y-4">
-                        <input type="text" placeholder="Nama Lengkap" required class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white">
-                        <input type="text" placeholder="No. WhatsApp / Email" required class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white">
-                        <textarea rows="3" placeholder="Pesan Anda" required class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white"></textarea>
-                        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-lg transition">Kirim</button>
-                    </form>
+
+                <!-- Card 2: Fasilitas Lab -->
+                <div class="rounded-3xl bg-navy-800/60 border border-slate-700/70 p-7 hover:border-tech-500/50 transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-500/15 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-6">
+                        <i data-lucide="cpu" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Fasilitas Lab Jaringan Lengkap</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                        Siswa tidak hanya belajar teori, tetapi langsung mengonfigurasi perangkat nyata di laboratorium berstandar industri.
+                    </p>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-blue-400 shrink-0 mt-0.5"></i>
+                            <span>MikroTik RouterBoard & Cisco Manageable Switch.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-blue-400 shrink-0 mt-0.5"></i>
+                            <span>Fusion Splicer, OTDR, & Kit Instalasi Fiber Optik FTTH.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-blue-400 shrink-0 mt-0.5"></i>
+                            <span>Rak Server Rackmount & PC Workstation Spesifikasi Tinggi.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Card 3: Sertifikasi & Industri -->
+                <div class="rounded-3xl bg-navy-800/60 border border-slate-700/70 p-7 hover:border-tech-500/50 transition-all md:col-span-2 lg:col-span-1">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-6">
+                        <i data-lucide="award" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Sertifikasi & Kemitraan</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                        Lulusan dibekali sertifikat kompetensi resmi sebagai nilai tambah utama saat melamar kerja maupun berwirausaha.
+                    </p>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+                            <span>Uji Kompetensi Keahlian (UKK) bersama LSP & Industri ISP.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+                            <span>Persiapan Sertifikasi Internasional MTCNA & CCNA.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+                            <span>Praktik Kerja Lapangan (PKL) di ISP & Perusahaan IT Bandung.</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="bg-slate-950 text-slate-500 text-center py-6 border-t border-slate-800 text-sm">
-        <p>&copy; 2026 SMK Banjar Asri Cimaung. Hak Cipta Dilindungi.</p>
+    <!-- ==================== 4. MATERI PEMBELAJARAN TKJ (INTERAKTIF) ==================== -->
+    <section id="materi" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-tech-400 font-mono text-sm font-semibold uppercase tracking-wider">Kurikulum & Silabus</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2 mb-4">Materi Pembelajaran TKJ</h2>
+                <p class="text-slate-400 text-base sm:text-lg">
+                    Eksplorasi materi pembelajaran dari Kelas X hingga Kelas XII. Filter berdasarkan tingkatan kelas atau bidang keahlian jaringan, lalu klik kartu untuk melihat detail silabus dan praktik.
+                </p>
+            </div>
+
+            <!-- Filter Controls Container -->
+            <div class="bg-navy-900/90 border border-slate-800 rounded-3xl p-4 sm:p-6 mb-10 space-y-4">
+                <!-- Filter Baris 1: Tingkatan Kelas -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800/80">
+                    <span class="text-xs font-mono uppercase tracking-wider text-slate-400 flex items-center gap-2">
+                        <i data-lucide="layers" class="w-4 h-4 text-tech-400"></i> Filter Tingkatan Kelas:
+                    </span>
+                    <div class="flex flex-wrap gap-2" id="grade-filters">
+                        <button data-grade="ALL" class="grade-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-tech-500 text-navy-950 transition-all">Semua Kelas</button>
+                        <button data-grade="X" class="grade-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-navy-800 text-slate-300 hover:bg-navy-700 border border-slate-700 transition-all">Kelas X (Dasar)</button>
+                        <button data-grade="XI" class="grade-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-navy-800 text-slate-300 hover:bg-navy-700 border border-slate-700 transition-all">Kelas XI (Menengah)</button>
+                        <button data-grade="XII" class="grade-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-navy-800 text-slate-300 hover:bg-navy-700 border border-slate-700 transition-all">Kelas XII (Lanjutan)</button>
+                    </div>
+                </div>
+
+                <!-- Filter Baris 2: Kategori Bidang TKJ & Pencarian -->
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                    <div class="flex flex-wrap gap-2" id="category-filters">
+                        <button data-cat="ALL" class="cat-btn active px-3.5 py-2 rounded-xl text-xs font-medium bg-blue-600 text-white transition-all">Semua Bidang</button>
+                        <button data-cat="Jaringan Dasar" class="cat-btn px-3.5 py-2 rounded-xl text-xs font-medium bg-navy-800 text-slate-300 hover:bg-navy-700 border border-slate-700 transition-all">Jaringan Dasar</button>
+                        <button data-cat="Infrastruktur Jaringan" class="cat-btn px-3.5 py-2 rounded-xl text-xs font-medium bg-navy-800 text-slate-300 hover:bg-navy-700 border border-slate-700 transition-all">Infrastruktur (MikroTik/Cisco)</button>
+                        <button data-cat="Administrasi Sistem" class="cat-btn px-3.5 py-2 rounded-xl text-xs font-medium bg-navy-800 text-slate-300 hover:bg-navy-700 border border-slate-700 transition-all">Administrasi Sistem Jaringan</button>
+                        <button data-cat="Layanan Jaringan" class="cat-btn px-3.5 py-2 rounded-xl text-xs font-medium bg-navy-800 text-slate-300 hover:bg-navy-700 border border-slate-700 transition-all">Teknologi Layanan Jaringan</button>
+                        <button data-cat="Keamanan Jaringan" class="cat-btn px-3.5 py-2 rounded-xl text-xs font-medium bg-navy-800 text-slate-300 hover:bg-navy-700 border border-slate-700 transition-all">Keamanan Jaringan</button>
+                    </div>
+
+                    <!-- Search Box -->
+                    <div class="relative w-full lg:w-64 shrink-0">
+                        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                        <input type="text" id="materi-search" placeholder="Cari topik (mis. VLAN, Linux)..." class="w-full pl-10 pr-4 py-2 rounded-xl bg-navy-950 border border-slate-700 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-tech-400">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Materi Cards Grid -->
+            <div id="materi-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Cards will be dynamically rendered via JavaScript -->
+            </div>
+
+            <!-- Empty State (if no filter matches) -->
+            <div id="empty-state" class="hidden text-center py-16 bg-navy-900/40 rounded-3xl border border-slate-800">
+                <i data-lucide="folder-search" class="w-12 h-12 text-slate-500 mx-auto mb-3"></i>
+                <h3 class="text-lg font-bold text-white">Materi tidak ditemukan</h3>
+                <p class="text-slate-400 text-sm mt-1">Coba ubah kombinasi filter kelas, kategori, atau kata kunci pencarian.</p>
+                <button id="reset-filters-btn" class="mt-4 px-5 py-2.5 rounded-xl bg-tech-500 text-navy-950 font-semibold text-sm hover:bg-tech-400 transition-colors">
+                    Reset Semua Filter
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 5. PROSPEK KARIR & ALUMNI ==================== -->
+    <section id="prospek" class="py-20 bg-navy-900/60 border-y border-slate-800/70">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-tech-400 font-mono text-sm font-semibold uppercase tracking-wider">Masa Depan Lulusan</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2 mb-4">Prospek Karir Lulusan TKJ</h2>
+                <p class="text-slate-400 text-base sm:text-lg">
+                    Kebutuhan tenaga ahli jaringan komputer terus meningkat di berbagai sektor perusahaan, penyedia layanan internet (ISP), instansi pemerintah, hingga wirausaha IT.
+                </p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Career 1 -->
+                <div class="group rounded-3xl bg-navy-950 border border-slate-800 p-6 hover:border-tech-500/60 transition-all hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-2xl bg-tech-500/10 text-tech-400 flex items-center justify-center mb-5 group-hover:bg-tech-500 group-hover:text-navy-950 transition-colors">
+                        <i data-lucide="router" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Network Engineer</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-4">
+                        Merancang, membangun, dan memelihara infrastruktur jaringan skala lokal (LAN) maupun luas (WAN/ISP) berbasis MikroTik & Cisco.
+                    </p>
+                    <span class="inline-block text-xs font-mono text-tech-400 bg-tech-500/10 px-3 py-1 rounded-lg">ISP & Telekomunikasi</span>
+                </div>
+
+                <!-- Career 2 -->
+                <div class="group rounded-3xl bg-navy-950 border border-slate-800 p-6 hover:border-blue-500/60 transition-all hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-400 flex items-center justify-center mb-5 group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                        <i data-lucide="server-cog" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">System Administrator</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-4">
+                        Mengelola server berbasis Linux/Windows, virtualisasi cloud, layanan hosting, database server, serta backup sistem perusahaan.
+                    </p>
+                    <span class="inline-block text-xs font-mono text-blue-400 bg-blue-500/10 px-3 py-1 rounded-lg">Data Center & Cloud</span>
+                </div>
+
+                <!-- Career 3 -->
+                <div class="group rounded-3xl bg-navy-950 border border-slate-800 p-6 hover:border-emerald-500/60 transition-all hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-5 group-hover:bg-emerald-500 group-hover:text-navy-950 transition-colors">
+                        <i data-lucide="wrench" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">IT Support & Fiber Technician</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-4">
+                        Menangani troubleshooting perangkat keras/lunak, instalasi jaringan kantor, hingga penyambungan kabel serat optik (FTTH).
+                    </p>
+                    <span class="inline-block text-xs font-mono text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-lg">Perkantoran & Enterprise</span>
+                </div>
+
+                <!-- Career 4 -->
+                <div class="group rounded-3xl bg-navy-950 border border-slate-800 p-6 hover:border-indigo-500/60 transition-all hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-5 group-hover:bg-indigo-500 group-hover:text-white transition-colors">
+                        <i data-lucide="shield-check" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Cyber Security Junior</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-4">
+                        Melindungi jaringan dari serangan siber melalui konfigurasi firewall, VPN terenkripsi, monitoring lalu lintas data, dan audit keamanan.
+                    </p>
+                    <span class="inline-block text-xs font-mono text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-lg">Network Security</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 6. KONTAK & LOKASI SMK BANJAR ASRI ==================== -->
+    <section id="kontak" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-12 gap-10 items-start">
+                <!-- Left Column: Info Sekolah & Peta -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div>
+                        <span class="text-tech-400 font-mono text-sm font-semibold uppercase tracking-wider">Informasi & Lokasi</span>
+                        <h2 class="text-3xl font-extrabold text-white mt-2 mb-3">Hubungi Jurusan TKJ SMK Banjar Asri</h2>
+                        <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+                            Tertarik bergabung menjadi siswa baru atau ingin menjalin kerja sama industri (PKL/Rekrutmen) dengan Jurusan TKJ SMK Banjar Asri? Silakan hubungi kami.
+                        </p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4 p-4 rounded-2xl bg-navy-900 border border-slate-800">
+                            <div class="w-10 h-10 rounded-xl bg-tech-500/15 text-tech-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">Alamat Sekolah</h4>
+                                <p class="text-slate-400 text-sm mt-1">Jl. Gunung Puntang KM. 1, Desa Cimaung, Kec. Cimaung, Kabupaten Bandung, Jawa Barat 40374</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 p-4 rounded-2xl bg-navy-900 border border-slate-800">
+                            <div class="w-10 h-10 rounded-xl bg-blue-500/15 text-blue-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="mail" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">Email & Website</h4>
+                                <p class="text-slate-400 text-sm mt-1">tkj@smkbanjarasri.sch.id</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 p-4 rounded-2xl bg-navy-900 border border-slate-800">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="clock" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">Jam Operasional Lab & Sekretariat</h4>
+                                <p class="text-slate-400 text-sm mt-1">Senin – Jumat: 07.00 – 15.30 WIB</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Form Pesan -->
+                <div class="lg:col-span-7">
+                    <div class="rounded-3xl bg-navy-900 border border-slate-800 p-6 sm:p-8 shadow-xl">
+                        <h3 class="text-xl font-bold text-white mb-2">Kirim Pesan / Pertanyaan</h3>
+                        <p class="text-slate-400 text-sm mb-6">Isi formulir di bawah ini untuk pertanyaan seputar PPDB Jurusan TKJ, kurikulum, atau kemitraan.</p>
+
+                        <!-- Custom Notification Box (Replaces alert) -->
+                        <div id="form-feedback" class="hidden mb-6 p-4 rounded-2xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-sm flex items-start gap-3">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 shrink-0 mt-0.5"></i>
+                            <div>
+                                <p class="font-bold text-white">Pesan Berhasil Terkirim!</p>
+                                <p class="mt-0.5 text-emerald-200/90">Terima kasih telah menghubungi Jurusan TKJ SMK Banjar Asri Cimaung. Tim kami akan segera merespons pesan Anda.</p>
+                            </div>
+                        </div>
+
+                        <form id="contact-form" class="space-y-5">
+                            <div class="grid sm:grid-cols-2 gap-5">
+                                <div>
+                                    <label for="nama" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Nama Lengkap</label>
+                                    <input type="text" id="nama" required placeholder="Contoh: Ahmad Fauzan" class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-slate-700 text-white text-sm focus:outline-none focus:border-tech-400">
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Email / No. WhatsApp</label>
+                                    <input type="text" id="email" required placeholder="Contoh: 081234567890" class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-slate-700 text-white text-sm focus:outline-none focus:border-tech-400">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="kategori-pesan" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Perihal</label>
+                                <select id="kategori-pesan" class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-slate-700 text-white text-sm focus:outline-none focus:border-tech-400">
+                                    <option value="PPDB">Informasi Pendaftaran Siswa Baru (PPDB TKJ)</option>
+                                    <option value="Kurikulum">Pertanyaan Materi & Sertifikasi TKJ</option>
+                                    <option value="Kemitraan">Kemitraan Industri / Praktik Kerja Lapangan (PKL)</option>
+                                    <option value="Lainnya">Lainnya</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="pesan" class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Isi Pesan</label>
+                                <textarea id="pesan" rows="4" required placeholder="Tuliskan pertanyaan atau pesan Anda di sini..." class="w-full px-4 py-3 rounded-xl bg-navy-950 border border-slate-700 text-white text-sm focus:outline-none focus:border-tech-400"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-tech-500 to-blue-600 hover:from-tech-400 hover:to-blue-500 text-white font-bold text-sm shadow-lg shadow-tech-500/20 flex items-center justify-center gap-2 transition-all">
+                                <i data-lucide="send" class="w-4 h-4"></i>
+                                <span>Kirim Pesan Sekarang</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-navy-950 border-t border-slate-800/80 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-tech-500/20 text-tech-400 flex items-center justify-center">
+                    <i data-lucide="network" class="w-4 h-4"></i>
+                </div>
+                <span class="text-sm font-bold text-white">Jurusan TKJ — SMK Banjar Asri Cimaung</span>
+            </div>
+            <p class="text-xs text-slate-500 text-center sm:text-right">
+                &copy; 2026 Kompetensi Keahlian Teknik Komputer dan Jaringan. Kab. Bandung, Jawa Barat.
+            </p>
+        </div>
     </footer>
 
-    <!-- SCRIPT -->
+    <!-- ==================== MODAL DETAIL SILABUS MATERI ==================== -->
+    <div id="materi-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-navy-950/85 backdrop-blur-sm">
+        <div class="bg-navy-900 border border-slate-700 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl transform transition-all">
+            <!-- Modal Header -->
+            <div class="sticky top-0 bg-navy-900/95 backdrop-blur-md px-6 py-5 border-b border-slate-800 flex items-start justify-between gap-4 z-10">
+                <div>
+                    <div class="flex flex-wrap items-center gap-2 mb-2">
+                        <span id="modal-grade" class="px-2.5 py-0.5 rounded-md bg-tech-500/20 text-tech-400 font-mono text-xs font-bold">KELAS XI</span>
+                        <span id="modal-category" class="px-2.5 py-0.5 rounded-md bg-slate-800 text-slate-300 text-xs font-medium">Infrastruktur Jaringan</span>
+                    </div>
+                    <h3 id="modal-title" class="text-xl sm:text-2xl font-extrabold text-white">Judul Materi</h3>
+                </div>
+                <button id="close-modal-btn" aria-label="Tutup Modal" class="p-2 rounded-xl bg-navy-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6 space-y-6">
+                <div>
+                    <h4 class="text-xs font-mono uppercase tracking-wider text-tech-400 mb-2">Deskripsi Kompetensi</h4>
+                    <p id="modal-desc" class="text-slate-300 text-sm leading-relaxed"></p>
+                </div>
+
+                <!-- Topik Silabus -->
+                <div>
+                    <h4 class="text-xs font-mono uppercase tracking-wider text-tech-400 mb-3">Pokok Bahasan / Silabus Utama</h4>
+                    <ul id="modal-syllabus" class="space-y-2.5">
+                        <!-- Rendered dynamically -->
+                    </ul>
+                </div>
+
+                <!-- Praktikum & Tools -->
+                <div class="grid sm:grid-cols-2 gap-4 pt-2">
+                    <div class="p-4 rounded-2xl bg-navy-950 border border-slate-800">
+                        <h5 class="text-xs font-mono text-emerald-400 uppercase mb-2 flex items-center gap-1.5">
+                            <i data-lucide="terminal" class="w-4 h-4"></i> Proyek Praktikum Lab
+                        </h5>
+                        <p id="modal-lab" class="text-xs sm:text-sm text-slate-300 leading-relaxed"></p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-navy-950 border border-slate-800">
+                        <h5 class="text-xs font-mono text-blue-400 uppercase mb-2 flex items-center gap-1.5">
+                            <i data-lucide="cpu" class="w-4 h-4"></i> Perangkat & Software
+                        </h5>
+                        <div id="modal-tools" class="flex flex-wrap gap-1.5">
+                            <!-- Rendered dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="px-6 py-4 bg-navy-950/60 border-t border-slate-800 flex justify-end">
+                <button id="close-modal-footer-btn" class="px-5 py-2.5 rounded-xl bg-tech-500 hover:bg-tech-400 text-navy-950 font-bold text-sm transition-colors">
+                    Tutup Silabus
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
     <script>
-        const btn = document.getElementById('menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
+        // Data Lengkap Materi TKJ SMK Banjar Asri (Kelas X, XI, XII)
+        const materiTKJ = [
+            {
+                id: 1,
+                grade: "X",
+                category: "Jaringan Dasar",
+                icon: "cable",
+                title: "Dasar-Dasar Teknik Jaringan Komputer & Telekomunikasi",
+                summary: "Pengenalan arsitektur jaringan, model OSI & TCP/IP, pengalamatan IPv4/IPv6, subnetting, serta teknik pengkabelan UTP & dasar Fiber Optik.",
+                syllabus: [
+                    "Konsep dasar jaringan LAN, MAN, WAN, dan Topologi Jaringan",
+                    "Analisis 7 Layer Model OSI dan Protokol TCP/IP",
+                    "Perhitungan IP Address Kelas A, B, C, Subnetting (CIDR & VLSM)",
+                    "Teknik Crimping Kabel UTP (Straight & Cross) serta pengujian LAN Tester",
+                    "Pengenalan media transmisi nirkabel (Wi-Fi) dan gelombang radio"
+                ],
+                labProject: "Membangun jaringan Peer-to-Peer dan LAN kantor kecil menggunakan Switch dengan skema pembagian IP Subnetting VLSM.",
+                tools: ["Cisco Packet Tracer", "Crimping Tool", "Kabel UTP Cat6", "LAN Tester"]
+            },
+            {
+                id: 2,
+                grade: "X",
+                category: "Jaringan Dasar",
+                icon: "monitor-smartphone",
+                title: "Perakitan Komputer, Sistem Operasi & Troubleshooting",
+                summary: "Penguasaan arsitektur perangkat keras PC/Server, konfigurasi BIOS/UEFI, instalasi sistem operasi Windows & Linux, serta perawatan berkala.",
+                syllabus: [
+                    "Identifikasi komponen motherboard, prosesor, RAM, dan media penyimpanan NVMe/SSD",
+                    "Perakitan PC Workstation & manajemen kabel internal",
+                    "Konfigurasi BIOS/UEFI, partisi disk (GPT/MBR), dan Dual-Boot OS",
+                    "Instalasi & konfigurasi dasar Linux Debian/Ubuntu serta Windows",
+                    "Diagnosa kerusakan hardware menggunakan kode beep dan software diagnostik"
+                ],
+                labProject: "Merakit unit PC dari nol, melakukan instalasi Dual-Boot Windows & Linux Ubuntu, serta optimasi performa sistem.",
+                tools: ["PC Hardware Kit", "VirtualBox", "Linux Ubuntu", "Windows OS"]
+            },
+            {
+                id: 3,
+                grade: "XI",
+                category: "Infrastruktur Jaringan",
+                icon: "router",
+                title: "Administrasi Infrastruktur Jaringan (MikroTik & Cisco)",
+                summary: "Konfigurasi routing statis dan dinamis, manajemen bandwidth, VLAN pada manageable switch, serta hotspot gateway berbasis MikroTik RouterOS.",
+                syllabus: [
+                    "Konfigurasi dasar MikroTik RouterOS (IP Address, NAT Masquerade, DHCP Server)",
+                    "Manajemen Bandwidth menggunakan Simple Queue dan Queue Tree (PCQ)",
+                    "Konfigurasi VLAN (Virtual LAN) & Trunking pada Cisco Switch dan MikroTik",
+                    "Implementasi Static Routing dan Dynamic Routing (OSPF)",
+                    "Pembuatan sistem Login Hotspot Voucher & User Manager"
+                ],
+                labProject: "Merancang gateway internet sekolah dengan pemisahan jaringan Guru, Siswa (Hotspot), dan Lab menggunakan VLAN dan limitasi bandwidth.",
+                tools: ["MikroTik RB750Gr3/RB941", "Cisco Catalyst Switch", "Winbox", "Cisco Packet Tracer"]
+            },
+            {
+                id: 4,
+                grade: "XI",
+                category: "Administrasi Sistem",
+                icon: "server",
+                title: "Administrasi Sistem Jaringan (Linux Debian Server)",
+                summary: "Instalasi, konfigurasi, dan pemeliharaan berbagai layanan server berbasis sistem operasi Linux Debian menggunakan Command Line Interface (CLI).",
+                syllabus: [
+                    "Manajemen hak akses file, user, group, dan konfigurasi jaringan via CLI Linux",
+                    "Instalasi & konfigurasi Remote Server (SSH) dengan autentikasi SSH Key",
+                    "Konfigurasi DNS Server (Bind9) dan Web Server (Apache2 / Nginx)",
+                    "Konfigurasi DHCP Server, FTP Server, dan File Sharing (Samba)",
+                    "Instalasi Database Server (MariaDB) dan Control Panel Hosting"
+                ],
+                labProject: "Membangun server lokal mandiri di Linux Debian 12 yang melayani domain lokal, website profil kelas, dan penyimpanan file bersama.",
+                tools: ["Debian 12 Linux", "Proxmox VE", "PuTTY / Terminal", "Nginx & Bind9"]
+            },
+            {
+                id: 5,
+                grade: "XI",
+                category: "Layanan Jaringan",
+                icon: "phone-call",
+                title: "Teknologi Layanan Jaringan & Komunikasi VoIP",
+                summary: "Pemahaman komunikasi data, standar protokol komunikasi, serta pembangunan server telepon digital berbasis IP (VoIP) menggunakan Asterisk/Briker.",
+                syllabus: [
+                    "Analisis ragam aplikasi komunikasi data dan standar protokol SIP/H.323",
+                    "Konsep kerja Private Branch Exchange (PBX) dan VoIP",
+                    "Instalasi dan konfigurasi Server Softswitch berbasis Asterisk / Briker IPPBX",
+                    "Konfigurasi ekstensi dial-plan dan integrasi dengan IP Phone / Softphone",
+                    "Analisis kualitas layanan jaringan (QoS) untuk trafik suara dan video"
+                ],
+                labProject: "Membangun jaringan telepon internal antar ruang praktik menggunakan Server VoIP dan aplikasi Zoiper di smartphone/PC.",
+                tools: ["Briker IPPBX", "Asterisk", "Zoiper Softphone", "Wireshark"]
+            },
+            {
+                id: 6,
+                grade: "XII",
+                category: "Infrastruktur Jaringan",
+                icon: "sparkles",
+                title: "Teknologi Jaringan Berbasis Luas (WAN & Fiber Optik FTTH)",
+                summary: "Perancangan jaringan nirkabel jarak jauh (Point-to-Point) dan instalasi infrastruktur jaringan Fiber To The Home (FTTH) berkecepatan tinggi.",
+                syllabus: [
+                    "Perancangan jaringan Wireless Outdoor Point-to-Point (PtP) dan Point-to-Multipoint",
+                    "Pengenalan arsitektur jaringan Fiber Optik (OLT, ODC, ODP, ONT/ONU)",
+                    "Teknik pengupasan kabel fiber optik dan penyambungan menggunakan Fusion Splicer",
+                    "Pengukuran redaman cahaya menggunakan Optical Power Meter (OPM) dan OTDR",
+                    "Konfigurasi PPPoE Server pada MikroTik untuk distribusi internet pelanggan"
+                ],
+                labProject: "Simulasi instalasi jaringan ISP FTTH mulai dari penyambungan kabel FO di ODP hingga aktivasi internet PPPoE di modem ONT.",
+                tools: ["Fusion Splicer", "OTDR & OPM", "Kabel Dropcore FO", "ONT & MikroTik"]
+            },
+            {
+                id: 7,
+                grade: "XII",
+                category: "Keamanan Jaringan",
+                icon: "shield-alert",
+                title: "Keamanan Jaringan & Firewall Enterprise",
+                summary: "Analisis kerentanan sistem jaringan, implementasi firewall berlapis, VPN terenkripsi antar cabang, serta sistem deteksi intrusi.",
+                syllabus: [
+                    "Analisis ancaman siber (DDoS, Man-in-the-Middle, Brute Force, Phishing)",
+                    "Konfigurasi Firewall Filter Rules, Raw, dan Address List pada MikroTik & Linux UFW",
+                    "Implementasi Virtual Private Network (VPN) Site-to-Site (L2TP/IPSec, WireGuard)",
+                    "Pengamanan jaringan Wi-Fi (WPA2/WPA3 Enterprise & MAC Filtering)",
+                    "Monitoring trafik jaringan real-time menggunakan The Dude, Zabbix, atau Grafana"
+                ],
+                labProject: "Mengamankan server dan router dari serangan port scanning serta menghubungkan dua jaringan lokal berbeda melalui jalur VPN terenkripsi.",
+                tools: ["MikroTik Firewall", "WireGuard VPN", "Wireshark", "Zabbix Monitoring"]
+            },
+            {
+                id: 8,
+                grade: "XII",
+                category: "Administrasi Sistem",
+                icon: "cloud",
+                title: "Virtualisasi Server & Komputasi Awan (Cloud Computing)",
+                summary: "Penerapan teknologi virtualisasi Type-1 Hypervisor, containerisasi Docker, serta pengelolaan infrastruktur berbasis cloud modern.",
+                syllabus: [
+                    "Konsep Virtualisasi Server vs Bare-Metal dan pengenalan Cloud (IaaS, PaaS, SaaS)",
+                    "Instalasi & manajemen Virtual Machine menggunakan Proxmox Virtual Environment",
+                    "Konfigurasi Virtual Bridge, Storage Pool, Snapshot, dan High Availability",
+                    "Pengenalan Containerisasi aplikasi menggunakan Docker & Docker Compose",
+                    "Manajemen backup otomatis server ke penyimpanan cloud"
+                ],
+                labProject: "Membangun cluster mini server virtual menggunakan Proxmox VE yang menjalankan beberapa server Linux dan container aplikasi secara bersamaan.",
+                tools: ["Proxmox VE", "Docker", "Linux CLI", "Virtual Switch"]
+            }
+        ];
+
+        // State Filter
+        let currentGrade = "ALL";
+        let currentCategory = "ALL";
+        let searchQuery = "";
+
+        // DOM Elements
+        const materiGrid = document.getElementById("materi-grid");
+        const emptyState = document.getElementById("empty-state");
+        const gradeButtons = document.querySelectorAll(".grade-btn");
+        const categoryButtons = document.querySelectorAll(".cat-btn");
+        const searchInput = document.getElementById("materi-search");
+        const resetFiltersBtn = document.getElementById("reset-filters-btn");
+
+        // Modal Elements
+        const modal = document.getElementById("materi-modal");
+        const closeModalBtn = document.getElementById("close-modal-btn");
+        const closeModalFooterBtn = document.getElementById("close-modal-footer-btn");
+
+        // Render Materi Cards
+        function renderMateri() {
+            const filtered = materiTKJ.filter(item => {
+                const matchGrade = currentGrade === "ALL" || item.grade === currentGrade;
+                const matchCat = currentCategory === "ALL" || item.category === currentCategory;
+                const q = searchQuery.toLowerCase().trim();
+                const matchSearch = !q || 
+                    item.title.toLowerCase().includes(q) || 
+                    item.summary.toLowerCase().includes(q) ||
+                    item.tools.some(t => t.toLowerCase().includes(q)) ||
+                    item.syllabus.some(s => s.toLowerCase().includes(q));
+                return matchGrade && matchCat && matchSearch;
+            });
+
+            materiGrid.innerHTML = "";
+
+            if (filtered.length === 0) {
+                materiGrid.classList.add("hidden");
+                emptyState.classList.remove("hidden");
+                return;
+            }
+
+            materiGrid.classList.remove("hidden");
+            emptyState.classList.add("hidden");
+
+            filtered.forEach(item => {
+                const gradeBadgeColor = item.grade === "X" 
+                    ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/30" 
+                    : item.grade === "XI" 
+                        ? "bg-tech-500/15 text-tech-400 border-tech-500/30" 
+                        : "bg-indigo-500/15 text-indigo-400 border-indigo-500/30";
+
+                const card = document.createElement("div");
+                card.className = "group rounded-3xl bg-navy-900/90 border border-slate-800 p-6 flex flex-col justify-between hover:border-tech-500/60 hover:bg-navy-800/70 transition-all cursor-pointer shadow-lg";
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-5">
+                            <div class="w-11 h-11 rounded-2xl bg-navy-950 border border-slate-700/80 text-tech-400 flex items-center justify-center group-hover:scale-110 group-hover:border-tech-400 transition-all">
+                                <i data-lucide="${item.icon}" class="w-5 h-5"></i>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="px-2.5 py-1 rounded-lg border text-xs font-mono font-bold ${gradeBadgeColor}">
+                                    Kelas ${item.grade}
+                                </span>
+                            </div>
+                        </div>
+
+                        <span class="text-xs font-medium text-blue-400 block mb-1.5">${item.category}</span>
+                        <h3 class="text-lg font-bold text-white group-hover:text-tech-400 transition-colors leading-snug mb-3">
+                            ${item.title}
+                        </h3>
+                        <p class="text-slate-400 text-sm leading-relaxed line-clamp-3 mb-5">
+                            ${item.summary}
+                        </p>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                        <div class="flex flex-wrap gap-1.5">
+                            ${item.tools.slice(0, 2).map(tool => `<span class="text-[11px] font-mono px-2 py-0.5 rounded bg-navy-950 text-slate-300 border border-slate-800">${tool}</span>`).join("")}
+                        </div>
+                        <span class="inline-flex items-center gap-1 text-xs font-semibold text-tech-400 group-hover:translate-x-1 transition-transform">
+                            Detail Silabus <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                        </span>
+                    </div>
+                `;
+
+                card.addEventListener("click", () => openMateriModal(item));
+                materiGrid.appendChild(card);
+            });
+
+            // Re-initialize Lucide icons for newly rendered elements
+            lucide.createIcons();
+        }
+
+        // Open Modal with Syllabus Details
+        function openMateriModal(item) {
+            document.getElementById("modal-grade").textContent = `KELAS ${item.grade}`;
+            document.getElementById("modal-category").textContent = item.category;
+            document.getElementById("modal-title").textContent = item.title;
+            document.getElementById("modal-desc").textContent = item.summary;
+            document.getElementById("modal-lab").textContent = item.labProject;
+
+            const syllabusList = document.getElementById("modal-syllabus");
+            syllabusList.innerHTML = item.syllabus.map(topic => `
+                <li class="flex items-start gap-3 text-sm text-slate-300 bg-navy-950/60 p-3 rounded-xl border border-slate-800/80">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 text-tech-400 shrink-0 mt-0.5"></i>
+                    <span>${topic}</span>
+                </li>
+            `).join("");
+
+            const toolsContainer = document.getElementById("modal-tools");
+            toolsContainer.innerHTML = item.tools.map(tool => `
+                <span class="px-2.5 py-1 rounded-lg bg-blue-500/15 text-blue-300 border border-blue-500/30 text-xs font-mono">
+                    ${tool}
+                </span>
+            `).join("");
+
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+            document.body.style.overflow = "hidden";
+            lucide.createIcons();
+        }
+
+        // Close Modal
+        function closeMateriModal() {
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+            document.body.style.overflow = "";
+        }
+
+        closeModalBtn.addEventListener("click", closeMateriModal);
+        closeModalFooterBtn.addEventListener("click", closeMateriModal);
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) closeMateriModal();
+        });
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+                closeMateriModal();
+            }
+        });
+
+        // Filter Event Listeners: Grade
+        gradeButtons.forEach(btn => {
+            btn.addEventListener("click", () => {
+                gradeButtons.forEach(b => {
+                    b.classList.remove("bg-tech-500", "text-navy-950");
+                    b.classList.add("bg-navy-800", "text-slate-300", "border", "border-slate-700");
+                });
+                btn.classList.remove("bg-navy-800", "text-slate-300", "border", "border-slate-700");
+                btn.classList.add("bg-tech-500", "text-navy-950");
+                currentGrade = btn.dataset.grade;
+                renderMateri();
+            });
+        });
+
+        // Filter Event Listeners: Category
+        categoryButtons.forEach(btn => {
+            btn.addEventListener("click", () => {
+                categoryButtons.forEach(b => {
+                    b.classList.remove("bg-blue-600", "text-white");
+                    b.classList.add("bg-navy-800", "text-slate-300", "border", "border-slate-700");
+                });
+                btn.classList.remove("bg-navy-800", "text-slate-300", "border", "border-slate-700");
+                btn.classList.add("bg-blue-600", "text-white");
+                currentCategory = btn.dataset.cat;
+                renderMateri();
+            });
+        });
+
+        // Search Input Listener
+        searchInput.addEventListener("input", (e) => {
+            searchQuery = e.target.value;
+            renderMateri();
+        });
+
+        // Reset Filters Button
+        resetFiltersBtn.addEventListener("click", () => {
+            currentGrade = "ALL";
+            currentCategory = "ALL";
+            searchQuery = "";
+            searchInput.value = "";
+            gradeButtons[0].click();
+            categoryButtons[0].click();
+        });
+
+        // Mobile Navigation Toggle
+        const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const mobileLinks = document.querySelectorAll(".mobile-link");
+
+        mobileMenuBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                mobileMenu.classList.add("hidden");
+            });
+        });
+
+        // Contact Form Submission (Custom Message Box)
+        const contactForm = document.getElementById("contact-form");
+        const formFeedback = document.getElementById("form-feedback");
+
+        contactForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            formFeedback.classList.remove("hidden");
+            contactForm.reset();
+            setTimeout(() => {
+                formFeedback.classList.add("hidden");
+            }, 6000);
+        });
+
+        // Initial Render
+        document.addEventListener("DOMContentLoaded", () => {
+            renderMateri();
+            lucide.createIcons();
         });
     </script>
 </body>
 </html>
+```
